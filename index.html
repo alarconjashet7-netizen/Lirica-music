@@ -4,84 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>LIRICA · Tu Música</title>
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LIRICA">
 <style>
-:root{--accent:#FA2D48;--bg:#000;--card:#1C1C1E;--input:#2C2C2E;--muted:#8E8E93;--line:#2C2C2E}
+:root{--accent:#FA2D48;--green:#1DB954;--bg:#000;--card:#1C1C1E;--input:#2C2C2E;--muted:#8E8E93;--line:#2C2C2E}
 *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:#fff;padding-bottom:120px}
-header{padding:14px 20px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(0,0,0,.82);backdrop-filter:blur(24px);z-index:10;border-bottom:1px solid #1C1C1E}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:#fff;padding-bottom:120px;overflow-x:hidden}
+header{padding:14px 20px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(0,0,0,.82);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);z-index:10;border-bottom:1px solid #1C1C1E}
 header b{font-size:28px;letter-spacing:-1.2px;font-weight:900} header b span{color:var(--accent)}
-.btn{background:var(--accent);color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px}
+.btn{background:var(--accent);color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px;transition:transform .15s ease, opacity .15s}
+.btn:active{transform:scale(.96)}
+.btnGreen{background:var(--green);color:#000;border:0;padding:12px 22px;border-radius:999px;font-weight:800;cursor:pointer;font-size:15px}
 .btn2{background:var(--card);color:#fff;border:0;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
+.btnPill{background:rgba(255,255,255,.12);color:#fff;border:0;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:700}
 .btnDanger{background:#2A1215;color:#FF6B7A;border:0;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
-.btnSmall{padding:6px 10px;font-size:12px}
-main{padding:8px 20px 20px;max-width:1100px;margin:auto}
+main{padding:8px 20px 20px;max-width:1100px;margin:auto;content-visibility:auto}
 .navTabs{display:flex;gap:22px;padding:16px 0 4px;border-bottom:1px solid #1C1C1E}
 .navTabs span{font-size:15px;font-weight:700;color:var(--muted)} .navTabs span.active{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:8px}
 h2{margin:26px 0 14px;font-size:22px;letter-spacing:-.6px;font-weight:800}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:18px}
-.card{position:relative;cursor:pointer}
-.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#222;display:block;image-rendering:auto}
+.card{position:relative;cursor:pointer;will-change:transform;transition:transform .25s ease}
+.card:active{transform:scale(.97)}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#222;display:block}
 .card .info{padding:10px 2px} .card .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px} .card small{color:var(--muted)}
-.card .del{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.75);color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;z-index:2}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;z-index:50}
-.modal.open{display:flex}
-.box{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px;padding-bottom:34px}
+.card .del{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.75);color:#fff;border:0;width:28px;height:28px;border-radius:50%;cursor:pointer;z-index:2}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.open{display:flex;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.box{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px;padding-bottom:34px;animation:slideUp .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideUp{from{transform:translateY(30px);opacity:.5}to{transform:translateY(0);opacity:1}}
+.box.big{max-width:680px}
 input,textarea{width:100%;background:var(--input);border:0;color:#fff;padding:13px;border-radius:12px;margin:8px 0;outline:none;font-size:15px}
 textarea{min-height:120px} label{font-size:13px;color:#aaa;font-weight:600}
-.track{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line)}
-.track b{font-size:15px;display:block} .track small{color:var(--muted)}
-.miniplayer{position:fixed;left:12px;right:12px;bottom:12px;background:rgba(44,44,46,.96);backdrop-filter:blur(20px);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;z-index:20;cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.55)}
+.track{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .2s}
+.track:active{background:rgba(255,255,255,.06)}
+.track img{width:52px;height:52px;border-radius:6px;object-fit:cover;background:#222;flex-shrink:0}
+.track b{font-size:15px;display:block} .track small{color:var(--muted);font-size:13px}
+.track .dots{margin-left:auto;background:none;border:0;color:#aaa;font-size:20px;cursor:pointer;padding:8px}
+.playlistHeader{position:relative;margin:-20px -20px 12px;padding:28px 20px 16px;overflow:hidden;background:linear-gradient(180deg,#5a3a2a 0%,#2a1c14 45%,#121212 100%)}
+.playlistHeader .bgBlur{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(40px) brightness(.6);opacity:.8;transform:scale(1.2);will-change:transform}
+.playlistHeader .content{position:relative}
+.playlistHeader .back{position:absolute;top:0;left:0;background:rgba(0,0,0,.4);border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}
+.playlistHeader .coverBig{width:190px;height:190px;object-fit:cover;border-radius:8px;box-shadow:0 20px 50px rgba(0,0,0,.6);margin:26px 0 14px;display:block}
+.playlistHeader h1{font-size:30px;line-height:1.05;letter-spacing:-.8px;margin:0;font-weight:900}
+.playlistHeader .artistRow{display:flex;align-items:center;gap:8px;margin:10px 0 4px;font-weight:700;font-size:14px}
+.playlistHeader .artistRow img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+.playlistHeader .meta{font-size:12px;color:rgba(255,255,255,.65)}
+.playlistActions{display:flex;align-items:center;gap:12px;margin:16px 0 8px}
+.playlistActions .spacer{flex:1}
+.playlistPills{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.miniplayer{position:fixed;left:12px;right:12px;bottom:12px;background:rgba(44,44,46,.96);backdrop-filter:blur(20px);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;z-index:20;cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.55);will-change:transform;transition:transform .25s ease}
 .miniplayer img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#333} .miniplayer .flex{flex:1;min-width:0} .miniplayer b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .miniplayer small{color:#aaa}
 .fullplayer{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,#4A4A32 0%,#2E2E22 38%,#171717 72%,#000 100%);display:none;flex-direction:column;padding:14px 22px 28px;overflow:auto}
-.fullplayer.open{display:flex}
+.fullplayer.open{display:flex;animation:fadeIn .3s ease}
 .fullplayer .top{display:flex;justify-content:center;position:relative;padding:8px 0}
 .fullplayer .down{position:absolute;left:0;top:8px;background:rgba(255,255,255,.22);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
-.fullplayer .coverWrap{margin:18px auto 24px;width:min(82vw,360px);aspect-ratio:1}
-.fullplayer .coverWrap img{width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.65);image-rendering:auto}
+.fullplayer .coverWrap{margin:18px auto 24px;width:min(82vw,360px);aspect-ratio:1;will-change:transform}
+.fullplayer .coverWrap img{width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.65);transition:transform .4s ease}
 .fullplayer .titleRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .fullplayer .titleRow h1{margin:0;font-size:22px;line-height:1.2;font-weight:800} .fullplayer .titleRow p{margin:4px 0 0;color:rgba(255,255,255,.75);font-size:18px}
 .fullplayer .dots{background:none;border:0;color:#fff;font-size:22px;cursor:pointer}
 .progress{margin:18px 0 4px} .progress input{width:100%;accent-color:#fff} .progress .times{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.7);margin-top:4px}
 .controlsBig{display:flex;justify-content:center;align-items:center;gap:32px;margin:14px 0 22px}
-.controlsBig button{background:none;border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center} .controlsBig button svg{fill:#fff} .controlsBig button.play svg{width:58px;height:58px}
+.controlsBig button{background:none;border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s} .controlsBig button:active{transform:scale(.9)} .controlsBig button svg{fill:#fff} .controlsBig button.play svg{width:58px;height:58px}
 .volume{display:flex;align-items:center;gap:10px} .volume input{flex:1;accent-color:#fff} .volume svg{fill:rgba(255,255,255,.85)}
 .bottomIcons{display:flex;justify-content:space-around;margin-top:26px} .bottomIcons button{background:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,.9);font-weight:600} .bottomIcons button svg{fill:#fff;width:22px;height:22px}
 .lyricsFull{position:fixed;inset:0;z-index:200;background:#000;display:none;flex-direction:column;padding:14px 20px 22px;overflow:hidden}
-.lyricsFull.open{display:flex}
+.lyricsFull.open{display:flex;animation:fadeIn .25s ease}
 .lyricsFull .lTop{display:flex;justify-content:space-between;align-items:center;padding:8px 0 12px;border-bottom:1px solid #1C1C1E}
 .lyricsFull .lTop button{background:rgba(255,255,255,.15);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
 .lyricsFull .lTop b{font-size:17px} .lyricsFull .lTop small{color:#888;font-size:12px;display:block}
 .lyricsTabs{display:flex;gap:8px;margin:12px 0}
 .lyricsTabs button{flex:1;border:0;padding:10px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px;background:#1C1C1E;color:#aaa}
 .lyricsTabs button.active{background:#fff;color:#000}
-.syncBar{display:none;background:#1C1C1E;border:1px solid #333;border-radius:12px;padding:10px 12px;margin-bottom:10px;font-size:13px;line-height:1.4}
+.syncBar{display:none;background:#1C1C1E;border:1px solid #333;border-radius:12px;padding:12px;margin-bottom:10px;font-size:13px;line-height:1.5}
 .syncBar.open{display:block}
-.lyricsScroll{flex:1;overflow:auto;padding:6px 0 30px}
-.lyric-line{font-size:26px;font-weight:900;color:rgba(255,255,255,.32);margin:16px 0;cursor:pointer;line-height:1.2;letter-spacing:-.5px;padding:4px 0}
-.lyric-line.active{color:#fff;font-size:30px} .lyric-line.past{color:rgba(255,255,255,.55)}
-.lyric-line.syncing{border-left:3px solid var(--accent);padding-left:10px} .lyric-line .time{font-size:12px;color:#888;font-weight:600;display:block;margin-top:4px}
-.karaokeView .lyric-line{display:none} .karaokeView .lyric-line.show{display:block} .karaokeView .lyric-line.show.prev,.karaokeView .lyric-line.show.next{font-size:22px;opacity:.55}
-/* EDITOR DE LETRA NUEVO */
+.lyricsScroll{flex:1;overflow:auto;padding:20px 0 60px;scroll-behavior:smooth}
+.lyric-line{font-size:26px;font-weight:900;color:rgba(255,255,255,.28);margin:18px 0;cursor:pointer;line-height:1.25;letter-spacing:-.5px;padding:6px 0;transition:all .5s cubic-bezier(.22,1,.36,1);transform:scale(.96) translateY(4px);opacity:.55;filter:blur(1px);will-change:transform,opacity}
+.lyric-line.active{color:#fff;font-size:32px;transform:scale(1) translateY(0);opacity:1;filter:blur(0)}
+.lyric-line.past{color:rgba(255,255,255,.5);transform:scale(.97);filter:blur(0)}
+.lyric-line .time{font-size:12px;color:#888;font-weight:600;display:block;margin-top:4px}
+.karaokeView .lyric-line{display:none}
+.karaokeView .lyric-line.show{display:block}
+.karaokeView .lyric-line.show.prev,.karaokeView .lyric-line.show.next{font-size:22px;opacity:.55}
 .lyricEditRow{display:flex;gap:8px;align-items:flex-start;margin:8px 0}
 .lyricEditRow span{color:#888;font-size:12px;width:26px;padding-top:12px;text-align:center}
 .lyricEditRow textarea{flex:1;min-height:44px;margin:0;padding:10px;font-size:15px;font-weight:700}
 .lyricEditRow input{width:78px;margin:0;padding:10px;font-size:12px;text-align:center}
+.settingsItem{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #2C2C2E;cursor:pointer}
+.settingsItem b{font-size:15px} .settingsItem small{color:#888;display:block;font-size:12px} .settingsItem span{color:#888;font-size:18px}
 audio{display:none}
 </style>
 </head>
 <body>
-<header><b>LIRICA<span>.</span></b><button class="btn" onclick="openModal()">+ Nuevo Álbum</button></header>
+<header><b>LIRICA<span>.</span></b><div style="display:flex;gap:8px"><button class="btn2" onclick="openSettings()">Ajustes</button><button class="btn" onclick="openModal()">+ Nuevo Álbum</button></div></header>
 <main>
 <div class="navTabs"><span class="active">Biblioteca</span><span>Explorar</span><span>Radio</span></div>
 <h2>Tu Biblioteca</h2>
-<p>Tu música, tus álbumes, tus letras.</p>
-<div style="display:flex;gap:8px;margin-bottom:6px"><button class="btn2" onclick="deleteDuplicates()">Borrar duplicados</button><button class="btn2" onclick="deleteEmptyAlbums()">Borrar álbumes vacíos / Sin título</button></div>
+<p style="color:#888;font-size:13px">Tu música, tus álbumes, tus letras.</p>
 <div id="library" class="grid"></div>
 <p id="empty" style="color:#888">Aún no tienes álbumes. Crea uno para subir tu música.</p>
 <h2>Todos los temas</h2>
-<p style="color:#888;font-size:13px">Aquí también puedes borrar cada canción con el botón Eliminar.</p>
 <div id="allTracks"></div>
 </main>
+
+<div id="settingsModal" class="modal"><div class="box">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Ajustes</h2><button class="btn2" onclick="closeSettings()">Cerrar</button></div>
+<p style="color:#aaa;font-size:13px">Aquí editas y sincronizas tus letras sin que esté sonando música.</p>
+<div class="settingsItem" onclick="openSyncHub()"><div><b>Sincronizar letras</b><small>Elige una canción y sincroniza toda su letra</small></div><span>›</span></div>
+<div class="settingsItem" onclick="openLyricHub()"><div><b>Editar letras</b><small>Editar letra línea por línea con su tiempo</small></div><span>›</span></div>
+<div class="settingsItem" onclick="deleteDuplicates()"><div><b>Borrar duplicados</b><small>Borra canciones con el mismo nombre</small></div><span>›</span></div>
+<div class="settingsItem" onclick="deleteEmptyAlbums()"><div><b>Borrar álbumes Sin título</b><small>Borra el duplicado de abajo</small></div><span>›</span></div>
+<div class="settingsItem" onclick="alert('LIRICA - Centro de Control activado. Ahora la portada y el nombre salen bonitos en iPhone.')"><div><b>Centro de Control</b><small>Portada y nombre bonito en iPhone</small></div><span>›</span></div>
+</div></div>
+
+<div id="syncHub" class="modal"><div class="box big">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Sincronizar letras</h2><button class="btn2" onclick="closeSyncHub()">Cerrar</button></div>
+<p style="color:#aaa;font-size:13px">Elige una canción. Le das play, y cada vez que suene una línea le picas a <b>Siguiente línea</b>. Así sincronizas TODA la letra.</p>
+<div id="syncHubList"></div>
+</div></div>
+
+<div id="lyricHub" class="modal"><div class="box big">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Editar letras</h2><button class="btn2" onclick="closeLyricHub()">Cerrar</button></div>
+<p style="color:#aaa;font-size:13px">Elige una canción para editar su letra completa.</p>
+<div id="lyricHubList"></div>
+</div></div>
 
 <div id="modal" class="modal"><div class="box">
 <h2 id="modalTitle" style="margin:0">Nuevo Álbum</h2>
@@ -97,18 +147,32 @@ audio{display:none}
 <p id="createMsg" style="color:#FA2D48"></p>
 </div></div>
 
-<div id="albumView" class="modal"><div class="box">
-<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn2" onclick="closeAlbum()">Volver</button><div style="display:flex;gap:8px"><button class="btn2" onclick="startEditAlbum()">Editar</button><button class="btnDanger" onclick="deleteAlbum()">Eliminar álbum</button></div></div>
-<h2 id="viewTitle"></h2><p id="viewArtist" style="color:#aaa;margin-top:-8px"></p>
-<img id="viewCover" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;image-rendering:auto">
-<div id="viewTracks" style="margin-top:12px"></div>
+<div id="albumView" class="modal"><div class="box big" style="padding:0;overflow:hidden">
+<div id="playlistHeader" class="playlistHeader">
+<div id="plBg" class="bgBlur"></div>
+<div class="content">
+<button class="back" onclick="closeAlbum()">‹</button>
+<img id="viewCover" class="coverBig">
+<h1 id="viewTitle"></h1>
+<div class="artistRow"><img id="viewArtistImg"><span id="viewArtist"></span></div>
+<div class="meta" id="viewMeta"></div>
+<div class="playlistActions">
+<button class="btn2" onclick="startEditAlbum()">+ Agregar</button>
+<button class="btn2">Mixear</button>
+<div class="spacer"></div>
+<button onclick="playAlbumFromStart()" style="background:none;border:0;cursor:pointer;font-size:28px">🔀</button>
+<button class="btnGreen" onclick="playAlbumFromStart()">▶</button>
+</div>
+<div class="playlistPills"><button class="btnPill" onclick="startEditAlbum()">+ Agregar</button><button class="btnPill">Mixear</button><button class="btnPill" onclick="startEditAlbum()">Editar</button><button class="btnPill" onclick="deleteAlbum()">Eliminar</button></div>
+</div>
+</div>
+<div style="padding:0 16px 20px"><div id="viewTracks"></div></div>
 </div></div>
 
-<!-- EDITOR DE LETRA GRANDE -->
-<div id="lyricEditor" class="modal"><div class="box" style="max-width:680px">
+<div id="lyricEditor" class="modal"><div class="box big">
 <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Editar letra</h2><button class="btn2" onclick="closeLyricEditor()">Cerrar</button></div>
 <p id="lyricEditorSong" style="color:#aaa"></p>
-<p style="color:#aaa;font-size:13px">Edita cada línea. En la cajita de la derecha va el tiempo en segundos, ej: 12.5. Si lo dejas en 0, se usa el orden. Puedes borrar líneas dejándolas vacías.</p>
+<p style="color:#aaa;font-size:13px">Edita cada línea. En la cajita va el tiempo en segundos, ej: 12.5</p>
 <div id="lyricEditList"></div>
 <button class="btn2" onclick="addLyricLine()">+ Agregar línea</button>
 <div style="display:flex;gap:8px;margin-top:14px"><button class="btn" onclick="saveLyricEditor()">Guardar letra y tiempos</button><button class="btn2" onclick="clearSyncFromEditor()">Borrar tiempos</button></div>
@@ -133,30 +197,69 @@ audio{display:none}
 <div class="bottomIcons">
 <button onclick="openLyricsFull()"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 9h12v2H6zm8 5H6v-2h8zm4-6H6V6h12z"/></svg>Letra</button>
 <button onclick="openLyricsFull()"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm7-3a7 7 0 0 1-14 0H3a9 9 0 0 0 18 0h-2zM12 19v3h-1v-3h1z"/></svg>Cantar</button>
-<button onclick="showTrackOptions()"><svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>Lista</button>
+<button onclick="openSettings()"><svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>Ajustes</button>
 </div>
 </div>
 
 <div id="lyricsFull" class="lyricsFull">
-<div class="lTop"><div><b id="lyTitle">Letra</b><small id="lySub">Sincronizada · Toca una línea para saltar</small></div><button onclick="closeLyricsFull()">✕</button></div>
+<div class="lTop"><div><b id="lyTitle">Letra</b><small id="lySub">Sincronizada · Solo la línea que suena</small></div><button onclick="closeLyricsFull()">✕</button></div>
 <div class="lyricsTabs">
 <button id="tabSync" class="active" onclick="setLyricsMode('sync')">Sincronizada</button>
 <button id="tabFull" onclick="setLyricsMode('full')">Toda la letra</button>
-<button onclick="toggleSyncMode()">Sincronizar</button>
+<button onclick="openSettings()">Ajustes</button>
 </div>
-<div id="syncBar" class="syncBar"><b>Modo sincronizar activado</b><br>Reproduce desde el inicio. Cuando suene cada línea, tócala para guardar su tiempo. Luego pulsa Guardar sincronización.<br><button class="btn" style="margin-top:8px" onclick="saveSync()">Guardar sincronización</button> <button class="btn2" onclick="clearSync()">Borrar tiempos</button></div>
+<div id="syncBar" class="syncBar"><b>Sincronizando toda la letra</b><br>Línea <span id="syncProgress">1</span> de <span id="syncTotal">0</span>. Cuando suene la siguiente línea, pulsa <b>Siguiente línea</b>.<br><div style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="markNextLine()">Siguiente línea →</button><button class="btn2" onclick="saveSync()">Guardar toda</button></div></div>
 <div id="lyricsScroll" class="lyricsScroll"><div id="lyricsLines"></div></div>
-<button class="btn" onclick="openLyricEditorFromPlayer()">Editar letra completa</button>
+<p style="color:#888;font-size:12px;text-align:center">Para editar la letra ve a Ajustes → Editar letras</p>
 </div>
 
-<audio id="audio" ontimeupdate="updateTime()" onended="nextTrack()"></audio>
+<audio id="audio" ontimeupdate="updateTime()" onended="nextTrack()" onplay="updateMediaSessionState()" onpause="updateMediaSessionState()"></audio>
 
 <script>
 let albums = JSON.parse(localStorage.getItem('box_albums_v2')||'[]');
-// Migrar BOX -> LIRICA, conservar datos
-if(!localStorage.getItem('lirica_migrated')){ localStorage.setItem('lirica_migrated','1'); }
-let queue=[]; let currentAlbumId=null; let currentTrackIndex=0; let editingAlbumId=null; let lyricsMode='sync'; let syncing=false; let editingLyricAlbum=null; let editingLyricTrack=null;
+let queue=[]; let currentAlbumId=null; let currentTrackIndex=0; let editingAlbumId=null; let lyricsMode='sync'; let syncing=false; let syncIndex=0; let editingLyricAlbum=null; let editingLyricTrack=null;
 const audio=document.getElementById('audio');
+// ===== CENTRO DE CONTROL iPHONE - PORTADA Y NOMBRE BONITO =====
+function setupMediaSession(){
+  if(!('mediaSession' in navigator)) return;
+  try{
+    navigator.mediaSession.setActionHandler('play', ()=>{ audio.play(); updatePlayIcon(); });
+    navigator.mediaSession.setActionHandler('pause', ()=>{ audio.pause(); updatePlayIcon(); });
+    navigator.mediaSession.setActionHandler('previoustrack', ()=>{ prevTrack(); });
+    navigator.mediaSession.setActionHandler('nexttrack', ()=>{ nextTrack(); });
+    navigator.mediaSession.setActionHandler('seekto', (d)=>{ if(d.seekTime!=null) audio.currentTime=d.seekTime; });
+    navigator.mediaSession.setActionHandler('seekbackward', ()=>{ audio.currentTime=Math.max(0,audio.currentTime-10); });
+    navigator.mediaSession.setActionHandler('seekforward', ()=>{ audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10); });
+  }catch(e){}
+}
+function updateMediaSessionState(){
+  if(!('mediaSession' in navigator)) return;
+  try{ navigator.mediaSession.playbackState = audio.paused ? 'paused' : 'playing'; }catch(e){}
+}
+async function updateMediaSession(track, album, coverUrl){
+  if(!('mediaSession' in navigator)) return;
+  try{
+    // Si no hay URL usable, usamos la portada en alta calidad tal cual
+    let artwork = [];
+    if(coverUrl){
+      artwork = [
+        {src: coverUrl, sizes: '96x96', type: 'image/jpeg'},
+        {src: coverUrl, sizes: '128x128', type: 'image/jpeg'},
+        {src: coverUrl, sizes: '256x256', type: 'image/jpeg'},
+        {src: coverUrl, sizes: '512x512', type: 'image/jpeg'},
+        {src: coverUrl, sizes: '1024x1024', type: 'image/jpeg'}
+      ];
+    }
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.name || 'Sin título',
+      artist: album.artist || 'LIRICA',
+      album: album.name || 'LIRICA',
+      artwork: artwork
+    });
+    updateMediaSessionState();
+  }catch(e){ console.log('MediaSession no disponible', e); }
+}
+setupMediaSession();
 let dbPromise = new Promise((res,rej)=>{ let req=indexedDB.open('box_music_db',1); req.onupgradeneeded=()=>{req.result.createObjectStore('files')}; req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); });
 async function idbPut(k,b){let db=await dbPromise;return new Promise((res,rej)=>{let tx=db.transaction('files','readwrite');tx.objectStore('files').put(b,k);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
 async function idbGet(k){let db=await dbPromise;return new Promise((res,rej)=>{let tx=db.transaction('files','readonly');let r=tx.objectStore('files').get(k);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
@@ -167,10 +270,16 @@ function openModal(){editingAlbumId=null;document.getElementById('modalTitle').t
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 function closeAlbum(){document.getElementById('albumView').classList.remove('open')}
 function fmt(s){if(!s||isNaN(s))return '0:00';let m=Math.floor(s/60),ss=Math.floor(s%60);return m+':'+String(ss).padStart(2,'0')}
+function openSettings(){document.getElementById('settingsModal').classList.add('open')}
+function closeSettings(){document.getElementById('settingsModal').classList.remove('open')}
+function openSyncHub(){ closeSettings(); let list=document.getElementById('syncHubList'); list.innerHTML=''; albums.forEach(a=>a.tracks.forEach((t,ti)=>{ let d=document.createElement('div'); d.className='settingsItem'; d.innerHTML=`<div><b>${t.name}</b><small>${a.name} · ${t.times&&t.times.length?'Sincronizada':'Sin sincronizar'}</small></div><span>›</span>`; d.onclick=()=>startSyncFor(a.id,ti); list.appendChild(d); })); document.getElementById('syncHub').classList.add('open'); }
+function closeSyncHub(){document.getElementById('syncHub').classList.remove('open')}
+function openLyricHub(){ closeSettings(); let list=document.getElementById('lyricHubList'); list.innerHTML=''; albums.forEach(a=>a.tracks.forEach((t,ti)=>{ let d=document.createElement('div'); d.className='settingsItem'; d.innerHTML=`<div><b>${t.name}</b><small>${a.name} · ${t.lyrics?'Tiene letra':'Sin letra'}</small></div><span>›</span>`; d.onclick=()=>{ closeLyricHub(); openLyricEditor(a.id,ti); }; list.appendChild(d); })); document.getElementById('lyricHub').classList.add('open'); }
+function closeLyricHub(){document.getElementById('lyricHub').classList.remove('open')}
 function startEditAlbum(){let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; editingAlbumId=a.id; closeAlbum(); document.getElementById('modalTitle').textContent='Editar Álbum'; document.getElementById('albumName').value=a.name; document.getElementById('albumArtist').value=a.artist; document.getElementById('firstLyrics').value=''; document.getElementById('editHint').style.display='block'; if(a.coverKey){ getFileUrl(a.coverKey).then(u=>{ document.getElementById('coverPreview').src=u; document.getElementById('coverPreviewWrap').style.display='block'; }); } document.getElementById('modal').classList.add('open');}
 async function saveAlbum(){
   let btn=document.getElementById('saveBtn'), msg=document.getElementById('createMsg');
-  try{ btn.disabled=true; btn.textContent='Guardando...'; msg.textContent='Guardando en alta calidad, espera...';
+  try{ btn.disabled=true; btn.textContent='Guardando...'; msg.textContent='Guardando en alta calidad...';
     let name=document.getElementById('albumName').value.trim()||'Sin título'; let artist=document.getElementById('albumArtist').value.trim()||'Artista desconocido'; let coverFile=document.getElementById('coverInput').files[0];
     if(editingAlbumId){ let a=albums.find(x=>x.id===editingAlbumId); a.name=name; a.artist=artist; if(coverFile){ if(a.coverKey) await idbDel(a.coverKey); a.coverKey='cover_'+a.id+'_'+Date.now(); await idbPut(a.coverKey,coverFile); } let files=[...document.getElementById('songsInput').files]; if(files.length){ let firstLyrics=document.getElementById('firstLyrics').value; let lf=document.getElementById('lyricsFile').files[0]; if(lf) firstLyrics=await lf.text(); for(let i=0;i<files.length;i++){ let f=files[i]; let key='track_'+a.id+'_'+Date.now()+'_'+i; await idbPut(key,f); let ext=(f.name.split('.').pop()||'').toUpperCase(); a.tracks.push({name:f.name.replace(/\.[^/.]+$/,''),fileName:f.name,type:ext,key,lyrics:i===0?firstLyrics:'',times:[]}); } } saveMeta(); closeModal(); alert('Álbum actualizado');
     } else { let albumId=Date.now(); let coverKey=''; if(coverFile){ coverKey='cover_'+albumId; await idbPut(coverKey,coverFile); } let files=[...document.getElementById('songsInput').files]; if(!files.length){msg.textContent='Elige al menos 1 canción';btn.disabled=false;btn.textContent='Guardar Álbum';return} let firstLyrics=document.getElementById('firstLyrics').value; let lf=document.getElementById('lyricsFile').files[0]; if(lf) firstLyrics=await lf.text(); let tracks=[]; for(let i=0;i<files.length;i++){ let f=files[i]; let key='track_'+albumId+'_'+i+'_'+Date.now(); await idbPut(key,f); let ext=(f.name.split('.').pop()||'').toUpperCase(); tracks.push({name:f.name.replace(/\.[^/.]+$/,''),fileName:f.name,type:ext,key,lyrics:i===0?firstLyrics:'',times:[]}); } albums.unshift({id:albumId,name,artist,coverKey,tracks}); saveMeta(); closeModal(); alert('Álbum creado con '+tracks.length+' canciones'); }
@@ -179,32 +288,56 @@ async function saveAlbum(){
 }
 async function deleteAlbumById(id){ if(!confirm('¿Borrar este álbum y sus canciones?'))return; let a=albums.find(x=>x.id===id); if(a){ if(a.coverKey) await idbDel(a.coverKey); for(let t of a.tracks) await idbDel(t.key); } albums=albums.filter(x=>x.id!==id); saveMeta(); closeAlbum(); alert('Álbum eliminado'); }
 function deleteAlbum(){ deleteAlbumById(currentAlbumId); }
-async function deleteTrack(albumId,ti){ if(!confirm('¿Borrar esta canción "'+albums.find(x=>x.id===albumId).tracks[ti].name+'"?'))return; let a=albums.find(x=>x.id===albumId); let t=a.tracks[ti]; await idbDel(t.key); a.tracks.splice(ti,1); saveMeta(); openAlbum(albumId); }
-async function deleteDuplicates(){
-  if(!confirm('¿Borrar canciones duplicadas con el mismo nombre?'))return;
-  let seen=new Set(); let removed=0;
-  for(let a of albums){ let keep=[]; for(let t of a.tracks){ let key=t.name.toLowerCase().trim(); if(seen.has(key)){ await idbDel(t.key); removed++; } else { seen.add(key); keep.push(t); } } a.tracks=keep; }
-  albums=albums.filter(a=>a.tracks.length>0); saveMeta(); alert('Se borraron '+removed+' duplicadas');
-}
-async function deleteEmptyAlbums(){
-  if(!confirm('¿Borrar álbumes "Sin título" o vacíos? Esto borra el duplicado de abajo.'))return;
-  let toDel=albums.filter(a=>a.name==='Sin título'||a.tracks.length===0);
-  for(let a of toDel){ if(a.coverKey) await idbDel(a.coverKey); for(let t of a.tracks) await idbDel(t.key); }
-  albums=albums.filter(a=>!(a.name==='Sin título'||a.tracks.length===0)); saveMeta(); alert('Se borraron '+toDel.length+' álbumes');
-}
+async function deleteTrack(albumId,ti){ if(!confirm('¿Borrar esta canción?'))return; let a=albums.find(x=>x.id===albumId); let t=a.tracks[ti]; await idbDel(t.key); a.tracks.splice(ti,1); saveMeta(); openAlbum(albumId); }
+async function deleteDuplicates(){ if(!confirm('¿Borrar canciones duplicadas?'))return; let seen=new Set(); let removed=0; for(let a of albums){ let keep=[]; for(let t of a.tracks){ let k=t.name.toLowerCase().trim(); if(seen.has(k)){ await idbDel(t.key); removed++; } else { seen.add(k); keep.push(t); } } a.tracks=keep; } albums=albums.filter(a=>a.tracks.length>0); saveMeta(); alert('Se borraron '+removed+' duplicadas'); }
+async function deleteEmptyAlbums(){ if(!confirm('¿Borrar álbumes Sin título o vacíos?'))return; let toDel=albums.filter(a=>a.name==='Sin título'||a.tracks.length===0); for(let a of toDel){ if(a.coverKey) await idbDel(a.coverKey); for(let t of a.tracks) await idbDel(t.key); } albums=albums.filter(a=>!(a.name==='Sin título'||a.tracks.length===0)); saveMeta(); alert('Se borraron '+toDel.length+' álbumes'); }
 async function render(){
   let lib=document.getElementById('library'); lib.innerHTML=''; document.getElementById('empty').style.display=albums.length?'none':'block';
-  for(let a of albums){ let coverUrl=a.coverKey?await getFileUrl(a.coverKey):''; let d=document.createElement('div'); d.className='card'; d.innerHTML=`<button class="del" onclick="event.stopPropagation();deleteAlbumById(${a.id})">✕</button><img src="${coverUrl}" loading="eager"><div class="info"><b>${a.name}</b><small>${a.artist} · ${a.tracks.length} temas</small></div>`; d.onclick=(e)=>{ if(e.target.className!=='del') openAlbum(a.id); }; lib.appendChild(d); }
-  let all=document.getElementById('allTracks'); all.innerHTML=''; albums.forEach(a=>a.tracks.forEach((t,ti)=>{ let div=document.createElement('div'); div.className='track'; div.innerHTML=`<div><b>${t.name}</b><small>${a.name} · ${a.artist} · ${t.type} ${t.times&&t.times.length?'· Sincronizada':''}</small></div><div style="display:flex;gap:6px"><button class="btn2" onclick="openLyricEditor(${a.id},${ti})">Editar letra</button><button class="btnDanger" onclick="deleteTrack(${a.id},${ti})">Eliminar</button><button class="btn2" onclick="playFrom(${a.id},${ti})">Reproducir</button></div>`; all.appendChild(div); }));
+  for(let a of albums){ let coverUrl=a.coverKey?await getFileUrl(a.coverKey):''; let d=document.createElement('div'); d.className='card'; d.innerHTML=`<button class="del" onclick="event.stopPropagation();deleteAlbumById(${a.id})">✕</button><img src="${coverUrl}" loading="lazy" decoding="async"><div class="info"><b>${a.name}</b><small>${a.artist} · ${a.tracks.length} temas</small></div>`; d.onclick=(e)=>{ if(e.target.className!=='del') openAlbum(a.id); }; lib.appendChild(d); }
+  let all=document.getElementById('allTracks'); all.innerHTML='';
+  for(let a of albums){ for(let ti=0;ti<a.tracks.length;ti++){ let t=a.tracks[ti]; let coverUrl=a.coverKey?await getFileUrl(a.coverKey):''; let div=document.createElement('div'); div.className='track'; div.innerHTML=`<img src="${coverUrl}" loading="lazy"><div><b>${t.name}</b><small>${a.name} · ${a.artist} · ${t.type} ${t.times&&t.times.length?'· Sincronizada':''}</small></div><button class="dots" onclick="event.stopPropagation();trackMenu(${a.id},${ti})">•••</button>`; div.onclick=()=>playFrom(a.id,ti); all.appendChild(div); } }
 }
-async function openAlbum(id){ let a=albums.find(x=>x.id===id); if(!a)return; currentAlbumId=id; document.getElementById('viewTitle').textContent=a.name; document.getElementById('viewArtist').textContent=a.artist; document.getElementById('viewCover').src=a.coverKey?await getFileUrl(a.coverKey):''; let box=document.getElementById('viewTracks'); box.innerHTML=''; a.tracks.forEach((t,ti)=>{ let div=document.createElement('div'); div.className='track'; div.innerHTML=`<div><b>${t.name}</b><small>${t.fileName} · ${t.type} ${t.lyrics?'· Tiene letra':''} ${t.times&&t.times.length?'· Sincronizada':''}</small></div><div style="display:flex;gap:6px"><button class="btn2" onclick="openLyricEditor(${id},${ti})">Editar letra</button><button class="btnDanger" onclick="deleteTrack(${id},${ti})">Eliminar</button><button class="btn2" onclick="playFrom(${id},${ti})">Reproducir</button></div>`; box.appendChild(div); }); document.getElementById('albumView').classList.add('open'); }
+async function openAlbum(id){
+  let a=albums.find(x=>x.id===id); if(!a)return; currentAlbumId=id;
+  document.getElementById('viewTitle').textContent=a.name;
+  document.getElementById('viewArtist').textContent=a.artist;
+  document.getElementById('viewMeta').textContent='Álbum · '+a.artist+' · '+a.tracks.length+' canciones';
+  let coverUrl=a.coverKey?await getFileUrl(a.coverKey):'';
+  document.getElementById('viewCover').src=coverUrl;
+  document.getElementById('plBg').style.backgroundImage=`url(${coverUrl})`;
+  document.getElementById('viewArtistImg').src=coverUrl;
+  let box=document.getElementById('viewTracks'); box.innerHTML='';
+  for(let ti=0;ti<a.tracks.length;ti++){ let t=a.tracks[ti]; let div=document.createElement('div'); div.className='track'; div.innerHTML=`<img src="${coverUrl}"><div><b>${t.name}</b><small>${a.artist} ${t.lyrics?'· Tiene letra':''} ${t.times&&t.times.length?'· Sincronizada':''}</small></div><button class="dots" onclick="event.stopPropagation();trackMenu(${id},${ti})">•••</button>`; div.onclick=()=>playFrom(id,ti); box.appendChild(div); }
+  document.getElementById('albumView').classList.add('open');
+}
+function trackMenu(albumId,ti){ if(confirm('¿Editar letra?\nAceptar = Editar letra\nCancelar = Borrar canción')) openLyricEditor(albumId,ti); else deleteTrack(albumId,ti); }
+function playAlbumFromStart(){ if(!currentAlbumId) return; playFrom(currentAlbumId,0); }
 function playFrom(albumId,trackIdx){ let a=albums.find(x=>x.id===albumId); if(!a)return; queue=a.tracks; currentAlbumId=albumId; currentTrackIndex=trackIdx; loadCurrent(); closeAlbum(); }
-async function loadCurrent(){ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; let t=a.tracks[currentTrackIndex]; let url=await getFileUrl(t.key); if(!url){alert('Audio no encontrado');return} audio.src=url; audio.play(); audio.volume=document.getElementById('vol').value/100; updatePlayIcon(); document.getElementById('miniplayer').style.display='flex'; document.getElementById('pTitle').textContent=t.name; document.getElementById('fTitle').textContent=t.name; document.getElementById('pArtist').textContent=a.artist+' · '+a.name; document.getElementById('fArtist').textContent=a.artist+' · '+a.name; let cover= a.coverKey?await getFileUrl(a.coverKey):''; document.getElementById('pCover').src=cover; document.getElementById('fCover').src=cover; document.getElementById('lyTitle').textContent=t.name; renderLyricsKaraoke(); }
-function updatePlayIcon(){ let isPlaying=!audio.paused; document.getElementById('playIcon').innerHTML=isPlaying?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>'; document.getElementById('miniPlayBtn').textContent=isPlaying?'II':'▶'; }
+async function loadCurrent(){
+  let a=albums.find(x=>x.id===currentAlbumId); if(!a)return;
+  let t=a.tracks[currentTrackIndex]; let url=await getFileUrl(t.key); if(!url){alert('Audio no encontrado');return}
+  audio.src=url; audio.play(); audio.volume=document.getElementById('vol').value/100; updatePlayIcon();
+  document.getElementById('miniplayer').style.display='flex';
+  document.getElementById('pTitle').textContent=t.name; document.getElementById('fTitle').textContent=t.name;
+  document.getElementById('pArtist').textContent=a.artist+' · '+a.name; document.getElementById('fArtist').textContent=a.artist+' · '+a.name;
+  let cover= a.coverKey?await getFileUrl(a.coverKey):'';
+  document.getElementById('pCover').src=cover; document.getElementById('fCover').src=cover;
+  document.getElementById('lyTitle').textContent=t.name;
+  // ESTO ES LO QUE HACE QUE EN EL CENTRO DE CONTROL SALGA BONITO
+  updateMediaSession(t, a, cover);
+  renderLyricsKaraoke();
+}
+function updatePlayIcon(){ let isPlaying=!audio.paused; document.getElementById('playIcon').innerHTML=isPlaying?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>'; document.getElementById('miniPlayBtn').textContent=isPlaying?'II':'▶'; updateMediaSessionState(); }
 function togglePlay(){ if(audio.paused){audio.play()}else{audio.pause()} updatePlayIcon(); }
 function nextTrack(){if(!queue.length)return; currentTrackIndex=(currentTrackIndex+1)%queue.length; loadCurrent();}
 function prevTrack(){if(!queue.length)return; currentTrackIndex=(currentTrackIndex-1+queue.length)%queue.length; loadCurrent();}
-function updateTime(){document.getElementById('curTime').textContent=fmt(audio.currentTime);document.getElementById('durTime').textContent=fmt(audio.duration); if(audio.duration)document.getElementById('seek').value=(audio.currentTime/audio.duration)*100; syncLyrics();}
+function updateTime(){
+  document.getElementById('curTime').textContent=fmt(audio.currentTime);document.getElementById('durTime').textContent=fmt(audio.duration);
+  if(audio.duration)document.getElementById('seek').value=(audio.currentTime/audio.duration)*100;
+  // Actualiza posición para el Centro de Control
+  if('mediaSession' in navigator && audio.duration){ try{ navigator.mediaSession.setPositionState({duration: audio.duration, playbackRate: 1, position: audio.currentTime}); }catch(e){} }
+  syncLyrics();
+}
 function seekTo(v){if(audio.duration)audio.currentTime=(v/100)*audio.duration}
 function setVol(v){audio.volume=v/100}
 function openFullPlayer(){ if(!audio.src) return; document.getElementById('fullplayer').classList.add('open'); }
@@ -212,22 +345,22 @@ function closeFullPlayer(){ document.getElementById('fullplayer').classList.remo
 function openLyricsFull(){ setLyricsMode('sync'); renderLyricsKaraoke(); document.getElementById('lyricsFull').classList.add('open'); }
 function closeLyricsFull(){ document.getElementById('lyricsFull').classList.remove('open'); syncing=false; document.getElementById('syncBar').classList.remove('open'); }
 function setLyricsMode(m){ lyricsMode=m; document.getElementById('tabSync').classList.toggle('active',m==='sync'); document.getElementById('tabFull').classList.toggle('active',m==='full'); document.getElementById('lySub').textContent=m==='sync'?'Sincronizada · Solo la línea que suena':'Toda la letra · Lee libremente'; renderLyricsKaraoke(); syncLyrics(); }
-function toggleSyncMode(){ syncing=!syncing; document.getElementById('syncBar').classList.toggle('open',syncing); if(syncing){ setLyricsMode('full'); audio.currentTime=0; audio.play(); updatePlayIcon(); alert('Modo sincronizar: toca cada línea cuando suene'); } }
+function startSyncFor(albumId,ti){ closeSyncHub(); currentAlbumId=albumId; currentTrackIndex=ti; queue=albums.find(x=>x.id===albumId).tracks; syncing=true; syncIndex=0; loadCurrent(); setTimeout(()=>{ audio.currentTime=0; audio.play(); openLyricsFull(); document.getElementById('syncBar').classList.add('open'); let t=getCurrentTrack(); let lines=(t.lyrics||'').split('\n').filter(l=>l.trim()!==''); document.getElementById('syncTotal').textContent=lines.length; document.getElementById('syncProgress').textContent=1; if(!t.times) t.times=[]; },500); }
+function markNextLine(){ let t=getCurrentTrack(); if(!t) return; if(!t.times) t.times=[]; let lines=(t.lyrics||'').split('\n').filter(l=>l.trim()!==''); if(syncIndex<lines.length){ t.times[syncIndex]=audio.currentTime; syncIndex++; document.getElementById('syncProgress').textContent=Math.min(syncIndex+1,lines.length); renderLyricsKaraoke(); if(syncIndex>=lines.length) alert('Ya sincronizaste toda la letra. Dale Guardar toda.'); } }
 function getCurrentTrack(){ let a=albums.find(x=>x.id===currentAlbumId); if(!a) return null; return a.tracks[currentTrackIndex]; }
 function getActiveIndex(){ let t=getCurrentTrack(); if(!t) return 0; let lines=(t.lyrics||'').split('\n').filter(l=>l.trim()!==''); if(t.times && t.times.length===lines.length){ let idx=0; for(let i=0;i<t.times.length;i++){ if(audio.currentTime>=t.times[i]) idx=i; } return idx; } if(!audio.duration) return 0; return Math.min(lines.length-1, Math.floor((audio.currentTime/audio.duration)*lines.length)); }
-function renderLyricsKaraoke(){ let t=getCurrentTrack(); if(!t) return; let box=document.getElementById('lyricsLines'); box.innerHTML=''; let lines=(t.lyrics||'Esta canción aún no tiene letra.\nDale a Editar letra completa para agregarla.').split('\n').filter(l=>l.trim()!==''); box.className=lyricsMode==='sync'?'karaokeView':''; lines.forEach((line,i)=>{ let div=document.createElement('div'); div.className='lyric-line'; div.textContent=line; if(syncing){ div.classList.add('syncing'); let tm=document.createElement('span'); tm.className='time'; tm.textContent=t.times&&t.times[i]!=null?fmt(t.times[i]):'Sin tiempo - tócala cuando suene'; div.appendChild(tm); } div.onclick=()=>{ if(syncing){ if(!t.times) t.times=[]; t.times[i]=audio.currentTime; renderLyricsKaraoke(); } else if(audio.duration){ if(t.times && t.times[i]!=null) audio.currentTime=t.times[i]; else audio.currentTime=(i/lines.length)*audio.duration; } }; box.appendChild(div); }); syncLyrics(); }
-function syncLyrics(){ let lines=document.querySelectorAll('.lyric-line'); if(!lines.length) return; let activeIndex=getActiveIndex(); lines.forEach((el,i)=>{ el.classList.remove('active','past','show','prev','next'); if(i===activeIndex) el.classList.add('active'); if(i<activeIndex) el.classList.add('past'); if(lyricsMode==='sync'){ if(i>=activeIndex-1 && i<=activeIndex+1) el.classList.add('show'); if(i===activeIndex-1) el.classList.add('prev'); if(i===activeIndex+1) el.classList.add('next'); } }); if(lyricsMode==='sync'){ let active=document.querySelector('.lyric-line.active'); if(active && document.getElementById('lyricsFull').classList.contains('open')) active.scrollIntoView({behavior:'smooth',block:'center'}); } }
-function saveSync(){ let t=getCurrentTrack(); if(!t) return; saveMeta(); syncing=false; document.getElementById('syncBar').classList.remove('open'); alert('Sincronización guardada.'); setLyricsMode('sync'); }
+function renderLyricsKaraoke(){ let t=getCurrentTrack(); if(!t) return; let box=document.getElementById('lyricsLines'); box.innerHTML=''; let lines=(t.lyrics||'Esta canción aún no tiene letra.\nVe a Ajustes → Editar letras para agregarla.').split('\n').filter(l=>l.trim()!==''); box.className=lyricsMode==='sync'?'karaokeView':''; lines.forEach((line,i)=>{ let div=document.createElement('div'); div.className='lyric-line'; div.textContent=line; if(syncing){ div.classList.add('syncing'); let tm=document.createElement('span'); tm.className='time'; tm.textContent=t.times&&t.times[i]!=null?fmt(t.times[i]):'Sin tiempo'; div.appendChild(tm); } div.onclick=()=>{ if(syncing){ if(!t.times) t.times=[]; t.times[i]=audio.currentTime; syncIndex=i+1; document.getElementById('syncProgress').textContent=Math.min(syncIndex+1,lines.length); renderLyricsKaraoke(); } else if(audio.duration){ if(t.times && t.times[i]!=null) audio.currentTime=t.times[i]; else audio.currentTime=(i/lines.length)*audio.duration; } }; box.appendChild(div); }); syncLyrics(); }
+let lastActive=-1;
+function syncLyrics(){ let lines=document.querySelectorAll('.lyric-line'); if(!lines.length) return; let activeIndex=syncing?Math.min(syncIndex,lines.length-1):getActiveIndex(); lines.forEach((el,i)=>{ el.classList.remove('active','past','show','prev','next'); if(i===activeIndex) el.classList.add('active'); if(i<activeIndex) el.classList.add('past'); if(lyricsMode==='sync'){ if(i>=activeIndex-1 && i<=activeIndex+1) el.classList.add('show'); if(i===activeIndex-1) el.classList.add('prev'); if(i===activeIndex+1) el.classList.add('next'); } }); if(lyricsMode==='sync' && activeIndex!==lastActive){ lastActive=activeIndex; let active=document.querySelector('.lyric-line.active'); if(active && document.getElementById('lyricsFull').classList.contains('open')) active.scrollIntoView({behavior:'smooth',block:'center'}); } }
+function saveSync(){ let t=getCurrentTrack(); if(!t) return; saveMeta(); syncing=false; document.getElementById('syncBar').classList.remove('open'); alert('Toda la letra sincronizada y guardada.'); setLyricsMode('sync'); }
 function clearSync(){ let t=getCurrentTrack(); if(!t) return; t.times=[]; saveMeta(); renderLyricsKaraoke(); alert('Tiempos borrados'); }
-// EDITOR DE LETRA NUEVO - EL BUENO
 function openLyricEditor(albumId,trackIdx){ editingLyricAlbum=albumId; editingLyricTrack=trackIdx; let t=albums.find(x=>x.id===albumId).tracks[trackIdx]; document.getElementById('lyricEditorSong').textContent=t.name+' · '+albums.find(x=>x.id===albumId).name; let lines=(t.lyrics||'').split('\n'); if(lines.length===1&&lines[0]==='') lines=['','']; let list=document.getElementById('lyricEditList'); list.innerHTML=''; lines.forEach((line,i)=>{ addLyricRow(line, t.times&&t.times[i]!=null?t.times[i]:0); }); document.getElementById('lyricEditor').classList.add('open'); document.getElementById('albumView').classList.remove('open'); }
-function openLyricEditorFromPlayer(){ openLyricEditor(currentAlbumId, currentTrackIndex); document.getElementById('lyricsFull').classList.remove('open'); }
 function addLyricRow(text,time){ let list=document.getElementById('lyricEditList'); let div=document.createElement('div'); div.className='lyricEditRow'; let idx=list.children.length+1; div.innerHTML=`<span>${idx}</span><textarea rows="1">${text.replace(/</g,'&lt;')}</textarea><input type="number" step="0.1" min="0" value="${time||0}" placeholder="seg">`; list.appendChild(div); }
 function addLyricLine(){ addLyricRow('',0); }
 function closeLyricEditor(){ document.getElementById('lyricEditor').classList.remove('open'); }
-function saveLyricEditor(){ let rows=document.querySelectorAll('#lyricEditList .lyricEditRow'); let lines=[]; let times=[]; rows.forEach(r=>{ let txt=r.querySelector('textarea').value; let tm=parseFloat(r.querySelector('input').value)||0; if(txt.trim()!==''){ lines.push(txt); times.push(tm); } }); let t=albums.find(x=>x.id===editingLyricAlbum).tracks[editingLyricTrack]; t.lyrics=lines.join('\n'); t.times=times; saveMeta(); closeLyricEditor(); renderLyricsKaraoke(); alert('Letra guardada con '+lines.length+' líneas y tiempos. Ya quedó sincronizada.'); }
-function clearSyncFromEditor(){ document.querySelectorAll('#lyricEditList .lyricEditRow input').forEach(i=>i.value=0); alert('Tiempos en 0. Guarda para que use el orden.'); }
-function showTrackOptions(){ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; if(confirm('¿Editar letra de "'+a.tracks[currentTrackIndex].name+'"?')) openLyricEditor(a.id,currentTrackIndex); }
+function saveLyricEditor(){ let rows=document.querySelectorAll('#lyricEditList .lyricEditRow'); let lines=[]; let times=[]; rows.forEach(r=>{ let txt=r.querySelector('textarea').value; let tm=parseFloat(r.querySelector('input').value)||0; if(txt.trim()!==''){ lines.push(txt); times.push(tm); } }); let t=albums.find(x=>x.id===editingLyricAlbum).tracks[editingLyricTrack]; t.lyrics=lines.join('\n'); t.times=times; saveMeta(); closeLyricEditor(); renderLyricsKaraoke(); alert('Letra guardada con '+lines.length+' líneas.'); }
+function clearSyncFromEditor(){ document.querySelectorAll('#lyricEditList .lyricEditRow input').forEach(i=>i.value=0); alert('Tiempos en 0.'); }
+function showTrackOptions(){ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; openSettings(); }
 render();
 </script>
 </body>
