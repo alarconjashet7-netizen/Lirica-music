@@ -2,67 +2,77 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BOX · Tu Música</title>
 <style>
-*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Arial,sans-serif}
-body{margin:0;background:#000;color:#fff;padding-bottom:110px}
-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(0,0,0,.85);backdrop-filter:blur(20px);z-index:10;border-bottom:1px solid #222}
-header b{font-size:26px;letter-spacing:-1px;font-weight:900}
-header b span{color:#fa2d48}
-.btn{background:#fa2d48;color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer}
-.btn2{background:#1c1c1e;color:#fff;border:0;padding:9px 14px;border-radius:999px;cursor:pointer}
-.btnDanger{background:#2a1215;color:#ff6b7a;border:0;padding:9px 14px;border-radius:999px;cursor:pointer}
-main{padding:20px;max-width:1100px;margin:auto}
-h2{margin:28px 0 12px;font-size:22px;letter-spacing:-.5px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+:root{--accent:#FA2D48;--bg:#000;--card:#1C1C1E;--input:#2C2C2E;--muted:#8E8E93;--line:#2C2C2E;--danger-bg:#2A1215;--danger:#FF6B7A}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:#fff;padding-bottom:120px}
+header{padding:14px 20px 12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(0,0,0,.82);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);z-index:10;border-bottom:1px solid #1C1C1E}
+header b{font-size:28px;letter-spacing:-1.2px;font-weight:900}
+header b span{color:var(--accent)}
+.btn{background:var(--accent);color:#fff;border:0;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px}
+.btn2{background:var(--card);color:#fff;border:0;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
+.btnDanger{background:var(--danger-bg);color:var(--danger);border:0;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600}
+main{padding:8px 20px 20px;max-width:1100px;margin:auto}
+.navTabs{display:flex;gap:22px;padding:16px 0 4px;border-bottom:1px solid #1C1C1E;margin-bottom:8px}
+.navTabs span{font-size:15px;font-weight:700;color:var(--muted);cursor:pointer}
+.navTabs span.active{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:8px}
+h2{margin:26px 0 14px;font-size:22px;letter-spacing:-.6px;font-weight:800}
+h2 + p{color:var(--muted);font-size:14px;margin:-8px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:18px}
 .card{background:transparent;cursor:pointer}
-.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#222;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#222;box-shadow:0 10px 30px rgba(0,0,0,.5);display:block}
 .card .info{padding:10px 2px}
-.card .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}
-.card small{color:#8e8e93}
+.card .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;font-weight:700}
+.card small{color:var(--muted);font-size:13px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);display:none;align-items:flex-end;justify-content:center;z-index:50}
 .modal.open{display:flex}
-.box{background:#1c1c1e;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px;padding-bottom:30px}
-input,textarea{width:100%;background:#2c2c2e;border:0;color:#fff;padding:13px;border-radius:12px;margin:8px 0;outline:none}
-textarea{min-height:90px}
-label{font-size:13px;color:#aaa}
-.track{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid #2c2c2e}
-.track b{font-size:15px;display:block}
-.track small{color:#8e8e93}
-.miniplayer{position:fixed;left:12px;right:12px;bottom:12px;background:rgba(40,40,42,.95);backdrop-filter:blur(20px);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;z-index:20;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.box{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px;padding-bottom:34px}
+input,textarea{width:100%;background:var(--input);border:0;color:#fff;padding:13px;border-radius:12px;margin:8px 0;outline:none;font-size:15px}
+textarea{min-height:90px;resize:vertical}
+label{font-size:13px;color:#aaa;font-weight:600}
+.track{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line)}
+.track img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#333}
+.track b{font-size:15px;display:block;font-weight:700}
+.track small{color:var(--muted);font-size:13px}
+.miniplayer{position:fixed;left:12px;right:12px;bottom:12px;background:rgba(44,44,46,.96);backdrop-filter:blur(20px);border-radius:14px;padding:10px 12px;display:flex;gap:12px;align-items:center;z-index:20;cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.08)}
 .miniplayer img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#333}
 .miniplayer .flex{flex:1;min-width:0}
-.miniplayer b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.miniplayer small{color:#aaa}
-/* FULL PLAYER */
-.fullplayer{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,#6b6b3a 0%,#3a3a2a 35%,#1a1a1a 70%,#000 100%);display:none;flex-direction:column;padding:14px 22px 28px;overflow:auto}
+.miniplayer b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px}
+.miniplayer small{color:#aaa;font-size:13px}
+.fullplayer{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,#4A4A32 0%,#2E2E22 38%,#171717 72%,#000 100%);display:none;flex-direction:column;padding:14px 22px 28px;overflow:auto}
 .fullplayer.open{display:flex}
 .fullplayer .top{display:flex;justify-content:center;position:relative;padding:8px 0}
-.fullplayer .down{position:absolute;left:0;top:8px;background:rgba(255,255,255,.2);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
-.fullplayer .coverWrap{margin:18px auto 28px;width:min(82vw,360px);aspect-ratio:1}
-.fullplayer .coverWrap img{width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.fullplayer .down{position:absolute;left:0;top:8px;background:rgba(255,255,255,.22);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+.fullplayer .coverWrap{margin:18px auto 24px;width:min(82vw,360px);aspect-ratio:1}
+.fullplayer .coverWrap img{width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.65)}
 .fullplayer .titleRow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.fullplayer .titleRow h1{margin:0;font-size:22px;line-height:1.2}
+.fullplayer .titleRow h1{margin:0;font-size:22px;line-height:1.2;font-weight:800;letter-spacing:-.4px}
 .fullplayer .titleRow p{margin:4px 0 0;color:rgba(255,255,255,.75);font-size:18px}
-.fullplayer .dots{background:none;border:0;color:#fff;font-size:24px;cursor:pointer}
+.fullplayer .dots{background:none;border:0;color:#fff;font-size:22px;cursor:pointer;letter-spacing:2px}
 .progress{margin:18px 0 4px}
 .progress input{width:100%;accent-color:#fff}
-.progress .times{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.7);margin-top:4px}
-.controlsBig{display:flex;justify-content:center;align-items:center;gap:28px;margin:14px 0 22px}
-.controlsBig button{background:none;border:0;color:#fff;font-size:34px;cursor:pointer}
-.controlsBig button.play{font-size:56px}
+.progress .times{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;font-variant-numeric:tabular-nums}
+.controlsBig{display:flex;justify-content:center;align-items:center;gap:32px;margin:14px 0 22px}
+.controlsBig button{background:none;border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.controlsBig button svg{fill:#fff}
+.controlsBig button.play svg{width:58px;height:58px}
 .volume{display:flex;align-items:center;gap:10px;color:#fff}
 .volume input{flex:1;accent-color:#fff}
-.bottomIcons{display:flex;justify-content:space-around;margin-top:26px;color:rgba(255,255,255,.85)}
-.bottomIcons button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer}
-/* LETRA ESTILO APPLE MUSIC SING */
-.lyricsBox{background:#000;border-radius:0;padding:20px;white-space:normal;line-height:1.25;display:none;margin-top:14px;max-height:62vh;overflow:auto}
-.lyricsBox.open{display:block}
-.lyric-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.lyric-top small{color:rgba(255,255,255,.6);font-size:12px}
-.lyric-line{font-size:26px;font-weight:900;color:rgba(255,255,255,.35);margin:14px 0;cursor:pointer;transition:all .3s;line-height:1.2;letter-spacing:-.5px}
-.lyric-line.active{color:#fff;font-size:30px;transform:scale(1.02)}
+.volume svg{fill:rgba(255,255,255,.85)}
+.bottomIcons{display:flex;justify-content:space-around;margin-top:26px}
+.bottomIcons button{background:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,.9);font-weight:600}
+.bottomIcons button svg{fill:#fff;width:22px;height:22px}
+.lyricsFull{position:fixed;inset:0;z-index:200;background:#000;display:none;flex-direction:column;padding:16px 22px 30px;overflow:hidden}
+.lyricsFull.open{display:flex}
+.lyricsFull .lTop{display:flex;justify-content:space-between;align-items:center;padding:8px 0 16px;border-bottom:1px solid #1C1C1E}
+.lyricsFull .lTop button{background:rgba(255,255,255,.15);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+.lyricsFull .lTop b{font-size:17px}
+.lyricsFull .lTop small{color:#888;font-size:12px;display:block;margin-top:2px}
+.lyricsScroll{flex:1;overflow:auto;padding:10px 0 40px}
+.lyric-line{font-size:26px;font-weight:900;color:rgba(255,255,255,.32);margin:16px 0;cursor:pointer;line-height:1.2;letter-spacing:-.5px}
+.lyric-line.active{color:#fff;font-size:30px}
 .lyric-line.past{color:rgba(255,255,255,.55)}
 audio{display:none}
 </style>
@@ -70,7 +80,9 @@ audio{display:none}
 <body>
 <header><b>BOX<span>.</span></b><button class="btn" onclick="openModal()">+ Nuevo Álbum</button></header>
 <main>
+<div class="navTabs"><span class="active">Biblioteca</span><span>Explorar</span><span>Radio</span></div>
 <h2>Tu Biblioteca</h2>
+<p>Tu música, tus álbumes, tus letras.</p>
 <div id="library" class="grid"></div>
 <p id="empty" style="color:#888">Aún no tienes álbumes. Crea uno para subir tu música WAV o MP3.</p>
 <h2>Todos los temas</h2>
@@ -89,11 +101,11 @@ audio{display:none}
 <label>Letra de la primera canción (opcional)</label><textarea id="firstLyrics" placeholder="Pega aquí la letra..."></textarea>
 <label>O sube la letra en .txt</label><input type="file" id="lyricsFile" accept=".txt,text/plain">
 <div style="display:flex;gap:10px;margin-top:10px"><button class="btn" id="saveBtn" onclick="saveAlbum()">Guardar Álbum</button><button class="btn2" onclick="closeModal()">Cancelar</button></div>
-<p id="createMsg" style="color:#fa2d48"></p>
+<p id="createMsg" style="color:#FA2D48"></p>
 </div></div>
 
 <div id="albumView" class="modal"><div class="box">
-<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn2" onclick="closeAlbum()">← Volver</button><div style="display:flex;gap:8px"><button class="btn2" onclick="startEditAlbum()">✏️ Editar</button><button class="btnDanger" onclick="deleteAlbum()">🗑 Eliminar álbum</button></div></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn2" onclick="closeAlbum()">Volver</button><div style="display:flex;gap:8px"><button class="btn2" onclick="startEditAlbum()">Editar</button><button class="btnDanger" onclick="deleteAlbum()">Eliminar álbum</button></div></div>
 <h2 id="viewTitle"></h2><p id="viewArtist" style="color:#aaa;margin-top:-8px"></p>
 <img id="viewCover" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px">
 <div id="viewTracks" style="margin-top:12px"></div>
@@ -101,31 +113,36 @@ audio{display:none}
 
 <div class="miniplayer" id="miniplayer" onclick="openFullPlayer()" style="display:none">
 <img id="pCover"><div class="flex"><b id="pTitle">Sin reproducción</b><small id="pArtist">Elige una canción</small></div>
-<button class="btn2" onclick="event.stopPropagation();togglePlay()">▶</button>
+<button class="btn2" id="miniPlayBtn" onclick="event.stopPropagation();togglePlay()" style="font-size:18px">▶</button>
 </div>
 
 <div id="fullplayer" class="fullplayer">
 <div class="top"><button class="down" onclick="closeFullPlayer()">˅</button><div style="width:40px;height:5px;background:rgba(255,255,255,.4);border-radius:999px"></div></div>
 <div class="coverWrap"><img id="fCover"></div>
-<div class="titleRow"><div><h1 id="fTitle">Beep Beep</h1><p id="fArtist">Artista</p></div><button class="dots" onclick="showTrackOptions()">•••</button></div>
+<div class="titleRow"><div><h1 id="fTitle">Título</h1><p id="fArtist">Artista</p></div><button class="dots" onclick="showTrackOptions()">•••</button></div>
 <div class="progress"><input type="range" id="seek" value="0" min="0" max="100" oninput="seekTo(this.value)"><div class="times"><span id="curTime">0:00</span><span>EN VIVO</span><span id="durTime">0:00</span></div></div>
 <div class="controlsBig">
-<button onclick="prevTrack()">⏮</button>
-<button class="play" id="playBtnBig" onclick="togglePlay()">▶</button>
-<button onclick="nextTrack()">⏭</button>
+<button onclick="prevTrack()" aria-label="Anterior"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+<button class="play" id="playBtnBig" onclick="togglePlay()" aria-label="Play / Pausa"><svg id="playIcon" width="58" height="58" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+<button onclick="nextTrack()" aria-label="Siguiente"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
 </div>
-<div class="volume"><span>🔈</span><input type="range" id="vol" min="0" max="100" value="80" oninput="setVol(this.value)"><span>🔊</span></div>
+<div class="volume">
+<svg width="20" height="20" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+<input type="range" id="vol" min="0" max="100" value="80" oninput="setVol(this.value)">
+<svg width="20" height="20" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+</div>
 <div class="bottomIcons">
-<button onclick="toggleLyricsBox()">💬 Letra</button>
-<button onclick="toggleLyricsBox()">🎙</button>
-<button onclick="showTrackOptions()">☰</button>
+<button onclick="openLyricsFull()"><svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM6 9h12v2H6zm8 5H6v-2h8zm4-6H6V6h12z"/></svg>Letra</button>
+<button onclick="openLyricsFull()"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm7-3a7 7 0 0 1-14 0H3a9 9 0 0 0 18 0h-2zM12 19v3h-1v-3h1z"/></svg>Cantar</button>
+<button onclick="showTrackOptions()"><svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>Lista</button>
 </div>
-<div id="lyricsBox" class="lyricsBox">
-<div class="lyric-top"><b id="lyTitle">Letra</b><small>KARAOKE • Toca una línea para saltar</small></div>
-<div id="lyricsLines"></div>
+</div>
+
+<div id="lyricsFull" class="lyricsFull">
+<div class="lTop"><div><b id="lyTitle">Letra</b><small id="lySub">Toca una línea para saltar a esa parte</small></div><button onclick="closeLyricsFull()">✕</button></div>
+<div id="lyricsScroll" class="lyricsScroll"><div id="lyricsLines"></div></div>
 <textarea id="lyEdit" style="display:none"></textarea>
-<button class="btn" id="lyBtn" onclick="editLyrics()" style="margin-top:16px">Editar letra</button>
-</div>
+<button class="btn" id="lyBtn" onclick="editLyrics()" style="margin-top:10px">Editar letra</button>
 </div>
 
 <audio id="audio" ontimeupdate="updateTime()" onended="nextTrack()"></audio>
@@ -172,7 +189,7 @@ async function saveAlbum(){
         let lf=document.getElementById('lyricsFile').files[0]; if(lf) firstLyrics=await lf.text();
         for(let i=0;i<files.length;i++){ let f=files[i]; let key='track_'+a.id+'_'+Date.now()+'_'+i; await idbPut(key,f); let ext=(f.name.split('.').pop()||'').toUpperCase(); a.tracks.push({name:f.name.replace(/\.[^/.]+$/,''),fileName:f.name,type:ext,key,lyrics:i===0?firstLyrics:''}); }
       }
-      saveMeta(); closeModal(); alert('Álbum actualizado ✓');
+      saveMeta(); closeModal(); alert('Álbum actualizado');
     } else {
       let albumId=Date.now(); let coverKey='';
       if(coverFile){ coverKey='cover_'+albumId; await idbPut(coverKey,coverFile); }
@@ -209,7 +226,7 @@ async function render(){
   let all=document.getElementById('allTracks'); all.innerHTML='';
   albums.forEach(a=>a.tracks.forEach((t,ti)=>{
     let div=document.createElement('div'); div.className='track';
-    div.innerHTML=`<div><b>${t.name}</b><small>${a.name} · ${a.artist} · ${t.type}</small></div><button class="btn2" onclick="playFrom(${a.id},${ti})">▶</button>`;
+    div.innerHTML=`<div><b>${t.name}</b><small>${a.name} · ${a.artist} · ${t.type}</small></div><button class="btn2" onclick="playFrom(${a.id},${ti})">Reproducir</button>`;
     all.appendChild(div);
   }));
 }
@@ -221,7 +238,7 @@ async function openAlbum(id){
   let box=document.getElementById('viewTracks'); box.innerHTML='';
   a.tracks.forEach((t,ti)=>{
     let div=document.createElement('div'); div.className='track';
-    div.innerHTML=`<div><b>${t.name}</b><small>${t.fileName} · ${t.type} ${t.lyrics?'· ♪ Tiene letra':''}</small></div><div style="display:flex;gap:6px"><button class="btn2" onclick="editTrackLyrics(${id},${ti})">✏️</button><button class="btnDanger" onclick="deleteTrack(${id},${ti})">🗑</button><button class="btn2" onclick="playFrom(${id},${ti})">▶</button></div>`;
+    div.innerHTML=`<div><b>${t.name}</b><small>${t.fileName} · ${t.type} ${t.lyrics?'· Tiene letra':''}</small></div><div style="display:flex;gap:6px"><button class="btn2" onclick="editTrackLyrics(${id},${ti})">Editar letra</button><button class="btnDanger" onclick="deleteTrack(${id},${ti})">Eliminar</button><button class="btn2" onclick="playFrom(${id},${ti})">Reproducir</button></div>`;
     box.appendChild(div);
   });
   document.getElementById('albumView').classList.add('open');
@@ -234,7 +251,7 @@ async function loadCurrent(){
   let a=albums.find(x=>x.id===currentAlbumId); if(!a)return;
   let t=a.tracks[currentTrackIndex]; let url=await getFileUrl(t.key); if(!url){alert('Audio no encontrado');return}
   audio.src=url; audio.play(); audio.volume=document.getElementById('vol').value/100;
-  document.getElementById('playBtnBig').textContent='⏸';
+  updatePlayIcon();
   document.getElementById('miniplayer').style.display='flex';
   document.getElementById('pTitle').textContent=t.name; document.getElementById('fTitle').textContent=t.name;
   document.getElementById('pArtist').textContent=a.artist+' · '+a.name; document.getElementById('fArtist').textContent=a.artist+' · '+a.name;
@@ -243,7 +260,12 @@ async function loadCurrent(){
   document.getElementById('lyTitle').textContent=t.name;
   renderLyricsKaraoke();
 }
-function togglePlay(){ if(audio.paused){audio.play();document.getElementById('playBtnBig').textContent='⏸'}else{audio.pause();document.getElementById('playBtnBig').textContent='▶'} }
+function updatePlayIcon(){
+  let isPlaying=!audio.paused;
+  document.getElementById('playIcon').innerHTML=isPlaying?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>';
+  document.getElementById('miniPlayBtn').textContent=isPlaying?'II':'▶';
+}
+function togglePlay(){ if(audio.paused){audio.play()}else{audio.pause()} updatePlayIcon(); }
 function nextTrack(){if(!queue.length)return; currentTrackIndex=(currentTrackIndex+1)%queue.length; loadCurrent();}
 function prevTrack(){if(!queue.length)return; currentTrackIndex=(currentTrackIndex-1+queue.length)%queue.length; loadCurrent();}
 function updateTime(){document.getElementById('curTime').textContent=fmt(audio.currentTime);document.getElementById('durTime').textContent=fmt(audio.duration); if(audio.duration)document.getElementById('seek').value=(audio.currentTime/audio.duration)*100; syncLyrics();}
@@ -251,7 +273,8 @@ function seekTo(v){if(audio.duration)audio.currentTime=(v/100)*audio.duration}
 function setVol(v){audio.volume=v/100}
 function openFullPlayer(){ if(!audio.src) return; document.getElementById('fullplayer').classList.add('open'); }
 function closeFullPlayer(){ document.getElementById('fullplayer').classList.remove('open'); }
-function toggleLyricsBox(){ document.getElementById('lyricsBox').classList.toggle('open'); }
+function openLyricsFull(){ renderLyricsKaraoke(); document.getElementById('lyricsFull').classList.add('open'); }
+function closeLyricsFull(){ document.getElementById('lyricsFull').classList.remove('open'); }
 function showTrackOptions(){ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; let t=a.tracks[currentTrackIndex]; if(confirm('¿Quieres editar la letra de "'+t.name+'"?')) editTrackLyrics(a.id,currentTrackIndex); }
 function renderLyricsKaraoke(){
   let a=albums.find(x=>x.id===currentAlbumId); if(!a) return;
@@ -277,18 +300,18 @@ function syncLyrics(){
     if(i<activeIndex) el.classList.add('past');
   });
   let active=document.querySelector('.lyric-line.active');
-  if(active && document.getElementById('lyricsBox').classList.contains('open')){
+  if(active && document.getElementById('lyricsFull').classList.contains('open')){
     active.scrollIntoView({behavior:'smooth',block:'center'});
   }
 }
 function editLyrics(){
   let btn=document.getElementById('lyBtn'); let edit=document.getElementById('lyEdit');
   if(edit.style.display==='none'){edit.style.display='block';btn.textContent='Guardar letra'; let a=albums.find(x=>x.id===currentAlbumId); edit.value=a?a.tracks[currentTrackIndex].lyrics||'':'';}
-  else{ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; a.tracks[currentTrackIndex].lyrics=edit.value; saveMeta(); edit.style.display='none'; btn.textContent='Editar letra'; renderLyricsKaraoke(); alert('Letra guardada ✓'); }
+  else{ let a=albums.find(x=>x.id===currentAlbumId); if(!a)return; a.tracks[currentTrackIndex].lyrics=edit.value; saveMeta(); edit.style.display='none'; btn.textContent='Editar letra'; renderLyricsKaraoke(); alert('Letra guardada'); }
 }
 function editTrackLyrics(albumId,trackIdx){
   let newLy=prompt('Pega la letra:', albums.find(x=>x.id===albumId).tracks[trackIdx].lyrics||'');
-  if(newLy!==null){ albums.find(x=>x.id===albumId).tracks[trackIdx].lyrics=newLy; saveMeta(); openAlbum(albumId); alert('Letra guardada ✓'); }
+  if(newLy!==null){ albums.find(x=>x.id===albumId).tracks[trackIdx].lyrics=newLy; saveMeta(); openAlbum(albumId); alert('Letra guardada'); }
 }
 render();
 </script>
